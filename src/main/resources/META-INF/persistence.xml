@@ -7,6 +7,20 @@
 
     <!--Default to JTA in a JavaEE environment -->
     <persistence-unit name="storePU" transaction-type="JTA">
+        <description>MySql DB for local Testing</description>
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
+
+        <!--There is only one Object with an id can exist in the Context -->
+        <class>de.arkadi.persistence.model.Artist</class>
+        <class>de.arkadi.persistence.model.Author</class>
+        <class>de.arkadi.persistence.model.Book</class>
+        <class>de.arkadi.persistence.model.CD</class>
+        <class>de.arkadi.persistence.model.Item</class>
+        <class>de.arkadi.persistence.model.Musician</class>
+        <class>de.arkadi.persistence.model.Publisher</class>
+
+        <!--jpa hibernate elcipslink properties -->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
@@ -15,6 +29,7 @@
             <property name="javax.persistence.sql-load-script-source" value="insert.sql"/>
         </properties>
     </persistence-unit>
+
 
     <!--RESOURCE_LOCAL in a JavaSE environment.-->
     <persistence-unit name="storePUTest" transaction-type="RESOURCE_LOCAL">
