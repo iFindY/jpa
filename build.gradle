@@ -1,0 +1,65 @@
+plugins {
+    id 'war'
+}
+repositories {
+    mavenCentral()
+}
+
+
+this.setGroup('de.arkadi')
+this.setDescription('my first webb application')
+this.defaultTasks('myWar')
+
+sourceSets {
+    main {
+        java {
+            // code
+            setSrcDirs(['src/main/java'])
+            // web config
+            setWebAppDirName('src/main/webapp')
+        }
+        resources {
+            // config
+            setSrcDirs(['src/main/resources'])
+
+        }
+    }
+    test {
+        java {
+            setSrcDirs(['src/test/java'])
+        }
+        resources {
+            setSrcDirs(['src/test/resources'])
+        }
+    }
+}
+
+dependencies {
+    compile("javax:javaee-api:7.0")
+    testCompile("junit:junit:4.11")
+    compile('org.hibernate:hibernate-core:5.3.7.Final')
+
+}
+
+task myWar(type: War) {
+    setClasspath(getConfigurations().getByName('compile'))
+    setArchivesBaseName("myWar")
+    webInf {
+        into('classes') {
+            from sourceSets.main.java.outputDir
+            from sourceSets.main.resources.asFileTree.matching {
+                include("**/persistence.xml")
+            }
+        }
+    }
+    metaInf {
+        manifest {
+            attributes 'version': '1.0'
+            attributes 'description': 'na description'
+            attributes 'creator': 'me'
+            attributes 'classifire': 'na'
+            attributes 'Class-Path': configurations.compile.files.collect { it.name }.join(' ')
+        }
+        from sourceSets.main.resources.asFileTree.matching { include("insert.sql") }
+    }
+}
