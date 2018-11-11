@@ -1,42 +1,35 @@
-package de.arkadi.persistence.util;
+package de.arkadi.persistence.interceptors;
+
+import de.arkadi.persistence.qualifier.Loggable;
 
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import java.io.Serializable;
 import java.util.logging.Logger;
-
-/**
- * This interceptor implements Serializable because it's used on a Stateful Session Bean who has
- * passivation and activation lifecycle.
- */
 
 @Loggable
 @Interceptor
-public class LoggingInterceptor implements Serializable {
+public class LoggingInterceptor {
 
     // ======================================
-    // =             Attributes             =
+    // =          Injection Points          =
     // ======================================
 
     @Inject
-    private transient Logger logger;
+    private Logger logger;
 
     // ======================================
     // =          Business methods          =
     // ======================================
 
     @AroundInvoke
-    public Object logMethod(InvocationContext ic) throws Exception {
+    private Object intercept(InvocationContext ic) throws Exception {
         logger.entering(ic.getTarget().getClass().getName(), ic.getMethod().getName());
-        logger.info(">>> " + ic.getTarget().getClass().getName() + "-" + ic.getMethod().getName());
         try {
             return ic.proceed();
         } finally {
             logger.exiting(ic.getTarget().getClass().getName(), ic.getMethod().getName());
-            logger.info("<<< " + ic.getTarget().getClass().getName() + "-" + ic.getMethod().getName());
         }
     }
-
 }

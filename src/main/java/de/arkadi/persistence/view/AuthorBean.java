@@ -2,7 +2,6 @@ package de.arkadi.persistence.view;
 
 
 import de.arkadi.persistence.model.Author;
-import de.arkadi.persistence.util.Loggable;
 
 import javax.annotation.Resource;
 import javax.ejb.SessionContext;
@@ -26,7 +25,6 @@ import java.util.List;
 @Named
 @Stateful
 @ConversationScoped
-@Loggable
 public class AuthorBean implements Serializable {
 
     // ======================================

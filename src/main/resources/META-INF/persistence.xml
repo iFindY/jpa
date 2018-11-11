@@ -11,6 +11,9 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
 
+        <!--entity listeners setting  fro lifecycle management -->
+        <mapping-file>META-INF/listeners.xml</mapping-file>
+
         <!--There is only one Object with an id can exist in the Context -->
         <class>de.arkadi.persistence.model.Artist</class>
         <class>de.arkadi.persistence.model.Author</class>
@@ -20,7 +23,7 @@
         <class>de.arkadi.persistence.model.Musician</class>
         <class>de.arkadi.persistence.model.Publisher</class>
 
-        <!--jpa hibernate elcipslink properties -->
+        <!--jpa, hibernate or eclipselink properties -->
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
             <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>

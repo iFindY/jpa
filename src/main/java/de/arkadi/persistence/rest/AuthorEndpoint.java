@@ -23,7 +23,7 @@ public class AuthorEndpoint {
   // =             Attributes             =
   // ======================================
 
-  @PersistenceContext(unitName = "module07PU")
+  @PersistenceContext(unitName = "storePU")
   private EntityManager em;
 
   // ======================================

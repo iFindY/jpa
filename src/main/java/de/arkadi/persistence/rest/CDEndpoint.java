@@ -4,10 +4,9 @@ package de.arkadi.persistence.rest;
 import de.arkadi.persistence.model.CD;
 
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.inject.Inject;
+import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -15,26 +14,29 @@ import javax.ws.rs.core.UriBuilder;
 import java.util.List;
 
 
-@Stateless
 @Path("/cds")
+@Transactional
 public class CDEndpoint {
 
     // ======================================
-    // =             Attributes             =
+    // =          Injection Points          =
     // ======================================
 
-    @PersistenceContext(unitName = "module07PU")
+    @Inject
     private EntityManager em;
 
     // ======================================
-    // =           Public Methods           =
+    // =          Business methods          =
     // ======================================
 
     @POST
-    @Consumes("application/xml")
+    @Consumes({"application/xml", "application/json"})
     public Response create(CD entity) {
         em.persist(entity);
-        return Response.created(UriBuilder.fromResource(CDEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
+        return Response.created(
+                UriBuilder.fromResource(CDEndpoint.class)
+                        .path(String.valueOf(entity.getId())).build())
+                .build();
     }
 
     @DELETE
@@ -50,9 +52,12 @@ public class CDEndpoint {
 
     @GET
     @Path("/{id:[0-9][0-9]*}")
-    @Produces("application/xml")
+    @Produces({"application/xml", "application/json"})
     public Response findById(@PathParam("id") Long id) {
-        TypedQuery<CD> findByIdQuery = em.createQuery("SELECT DISTINCT c FROM CD c LEFT JOIN FETCH c.musicians WHERE c.id = :entityId ORDER BY c.id", CD.class);
+        TypedQuery<CD> findByIdQuery = em
+                .createQuery(
+                        "SELECT DISTINCT c FROM CD c LEFT JOIN FETCH c.label LEFT JOIN FETCH c.musicians LEFT JOIN FETCH c.genre WHERE c.id = :entityId ORDER BY c.id",
+                        CD.class);
         findByIdQuery.setParameter("entityId", id);
         CD entity;
         try {
@@ -67,9 +72,13 @@ public class CDEndpoint {
     }
 
     @GET
-    @Produces("application/xml")
-    public List<CD> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
-        TypedQuery<CD> findAllQuery = em.createQuery("SELECT DISTINCT c FROM CD c LEFT JOIN FETCH c.musicians ORDER BY c.id", CD.class);
+    @Produces({"application/xml", "application/json"})
+    public List<CD> listAll(@QueryParam("start") Integer startPosition,
+                            @QueryParam("max") Integer maxResult) {
+        TypedQuery<CD> findAllQuery = em
+                .createQuery(
+                        "SELECT DISTINCT c FROM CD c LEFT JOIN FETCH c.label LEFT JOIN FETCH c.musicians LEFT JOIN FETCH c.genre ORDER BY c.id",
+                        CD.class);
         if (startPosition != null) {
             findAllQuery.setFirstResult(startPosition);
         }
@@ -82,9 +91,27 @@ public class CDEndpoint {
 
     @PUT
     @Path("/{id:[0-9][0-9]*}")
-    @Consumes("application/xml")
-    public Response update(CD entity) {
-        entity = em.merge(entity);
+    @Consumes({"application/xml", "application/json"})
+    public Response update(@PathParam("id") Long id, CD entity) {
+        if (entity == null) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        if (id == null) {
+            return Response.status(Status.BAD_REQUEST).build();
+        }
+        if (!id.equals(entity.getId())) {
+            return Response.status(Status.CONFLICT).entity(entity).build();
+        }
+        if (em.find(CD.class, id) == null) {
+            return Response.status(Status.NOT_FOUND).build();
+        }
+        try {
+            entity = em.merge(entity);
+        } catch (OptimisticLockException e) {
+            return Response.status(Response.Status.CONFLICT)
+                    .entity(e.getEntity()).build();
+        }
+
         return Response.noContent().build();
     }
 }

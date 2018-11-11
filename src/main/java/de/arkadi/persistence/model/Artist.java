@@ -14,146 +14,160 @@ import java.util.GregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Artist {
 
-  // ======================================
-  // =             Attributes             =
-  // ======================================
+    // ======================================
+    // =             Attributes             =
+    // ======================================
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @XmlAttribute
-  protected Long id = null;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @XmlAttribute
+    protected Long id = null;
 
-  @Column(name = "first_name", length = 50)
-  @XmlElement(name = "first-name")
-  @NotNull
-  @Size(min = 2, max = 50)
-  protected String firstName;
+    @Column(name = "first_name", length = 50)
+    @XmlElement(name = "first-name")
+    @NotNull
+    @Size(min = 2, max = 50)
+    protected String firstName;
 
-  @Column(name = "last_name", length = 50)
-  @XmlElement(name = "last-name")
-  @NotNull
-  @Size(min = 2, max = 50)
-  protected String lastName;
+    @Column(name = "last_name", length = 50)
+    @XmlElement(name = "last-name")
+    @NotNull
+    @Size(min = 2, max = 50)
+    protected String lastName;
 
-  @Column(length = 5000)
-  @Size(max = 5000)
-  protected String bio;
+    @Column(length = 5000)
+    @Size(max = 5000)
+    protected String bio;
 
-  @Column(name = "date_of_birth")
-  @XmlElement(name = "date-of-birth")
-  @Temporal(TemporalType.DATE)
-  @Past
-  protected Date dateOfBirth;
+    @Column(name = "date_of_birth")
+    @XmlElement(name = "date-of-birth")
+    @Temporal(TemporalType.DATE)
+    @Past
+    protected Date dateOfBirth;
 
-  @Transient
-  @XmlTransient
-  protected Integer age;
+    @Transient
+    @XmlTransient
+    protected Integer age;
 
-  // ======================================
-  // =     Lifecycle Callback Methods     =
-  // ======================================
+    // ======================================
+    // =     Lifecycle Callback Methods     =
+    // ======================================
 
-  @PostLoad
-  @PostPersist
-  @PostUpdate
-  public void calculateAge() {
-    if (dateOfBirth == null) {
-      age = null;
-      return;
+    /**
+     * exported in listeners
+     *
+     * @return
+     */
+//    @PrePersist
+//    @PreUpdate
+//    private void validate() {
+//        System.out.println("DataValidationListener validate()");
+//        if (firstName == null || "".equals(firstName))
+//            throw new IllegalArgumentException("Invalid first name");
+//        if (lastName == null || "".equals(lastName))
+//            throw new IllegalArgumentException("Invalid last name");
+//    }
+
+//    @PostLoad
+//    @PostPersist
+//    @PostUpdate
+//    public void calculateAge() {
+//        if (dateOfBirth == null) {
+//            age = null;
+//            return;
+//        }
+//
+//        Calendar birth = new GregorianCalendar();
+//        birth.setTime(dateOfBirth);
+//        Calendar now = new GregorianCalendar();
+//        now.setTime(new Date());
+//        int adjust = 0;
+//        if (now.get(Calendar.DAY_OF_YEAR) - birth.get(Calendar.DAY_OF_YEAR) < 0) {
+//            adjust = -1;
+//        }
+//        age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR) + adjust;
+//    }
+
+    // ======================================
+    // =          Getters & Setters         =
+    // ======================================
+    public Long getId() {
+        return id;
     }
 
-    Calendar birth = new GregorianCalendar();
-    birth.setTime(dateOfBirth);
-    Calendar now = new GregorianCalendar();
-    now.setTime(new Date());
-    int adjust = 0;
-    if (now.get(Calendar.DAY_OF_YEAR) - birth.get(Calendar.DAY_OF_YEAR) < 0) {
-      adjust = -1;
+    public void setId(Long id) {
+        this.id = id;
     }
-    age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR) + adjust;
-  }
 
-  // ======================================
-  // =          Getters & Setters         =
-  // ======================================
+    public String getFirstName() {
+        return firstName;
+    }
 
-  public Long getId() {
-    return id;
-  }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+    public String getLastName() {
+        return lastName;
+    }
 
-  public String getFirstName() {
-    return firstName;
-  }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-  public void setFirstName(String firstName) {
-    this.firstName = firstName;
-  }
+    public String getBio() {
+        return bio;
+    }
 
-  public String getLastName() {
-    return lastName;
-  }
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
-  public void setLastName(String lastName) {
-    this.lastName = lastName;
-  }
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
 
-  public String getBio() {
-    return bio;
-  }
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
 
-  public void setBio(String bio) {
-    this.bio = bio;
-  }
+    public Integer getAge() {
+        return age;
+    }
 
-  public Date getDateOfBirth() {
-    return dateOfBirth;
-  }
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 
-  public void setDateOfBirth(Date dateOfBirth) {
-    this.dateOfBirth = dateOfBirth;
-  }
+    // ======================================
+    // =    hashcode, equals & toString     =
+    // ======================================
 
-  public Integer getAge() {
-    return age;
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-  public void setAge(Integer age) {
-    this.age = age;
-  }
+        Artist artist = (Artist) o;
 
-  // ======================================
-  // =    hashcode, equals & toString     =
-  // ======================================
+        if (age != null ? !age.equals(artist.age) : artist.age != null) return false;
+        if (bio != null ? !bio.equals(artist.bio) : artist.bio != null) return false;
+        if (dateOfBirth != null ? !dateOfBirth.equals(artist.dateOfBirth) : artist.dateOfBirth != null) return false;
+        if (!firstName.equals(artist.firstName)) return false;
+        if (id != null ? !id.equals(artist.id) : artist.id != null) return false;
+        if (!lastName.equals(artist.lastName)) return false;
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
 
-    Artist artist = (Artist) o;
-
-    if (age != null ? !age.equals(artist.age) : artist.age != null) return false;
-    if (bio != null ? !bio.equals(artist.bio) : artist.bio != null) return false;
-    if (dateOfBirth != null ? !dateOfBirth.equals(artist.dateOfBirth) : artist.dateOfBirth != null) return false;
-    if (!firstName.equals(artist.firstName)) return false;
-    if (id != null ? !id.equals(artist.id) : artist.id != null) return false;
-    if (!lastName.equals(artist.lastName)) return false;
-
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    int result = id != null ? id.hashCode() : 0;
-    result = 31 * result + firstName.hashCode();
-    result = 31 * result + lastName.hashCode();
-    result = 31 * result + (bio != null ? bio.hashCode() : 0);
-    result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
-    result = 31 * result + (age != null ? age.hashCode() : 0);
-    return result;
-  }
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + (bio != null ? bio.hashCode() : 0);
+        result = 31 * result + (dateOfBirth != null ? dateOfBirth.hashCode() : 0);
+        result = 31 * result + (age != null ? age.hashCode() : 0);
+        return result;
+    }
 }

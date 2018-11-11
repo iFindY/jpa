@@ -4,17 +4,27 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.*;
 import java.io.Serializable;
 
 
 @Entity
+@DiscriminatorColumn(name = "discriminator", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("I")
+@NamedQueries({
+        @NamedQuery(name = Item.FIND_TOP_RATED, query = "SELECT i FROM Item i WHERE i.id in :ids"),
+        @NamedQuery(name = Item.SEARCH, query = "SELECT i FROM Item i WHERE UPPER(i.title) LIKE :keyword OR UPPER(i.description) LIKE :keyword ORDER BY i.title")
+
+})
 @XmlAccessorType(XmlAccessType.FIELD)
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Item implements Serializable {
+
+    // ======================================
+    // =             Constants              =
+    // ======================================
+
+    public static final String FIND_TOP_RATED = "Item.findTopRated";
+    public static final String SEARCH = "Item.search";
 
     // ======================================
     // =             Attributes             =
@@ -22,33 +32,55 @@ public class Item implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @XmlAttribute
-    protected Long id = null;
+    @Column(name = "id", updatable = false, nullable = false)
+    protected Long id;
 
-    @Column(length = 100)
+    @Version
+    @Column(name = "version")
+    @XmlTransient
+    protected int version;
+
+    @Column(length = 200)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 200)
     protected String title;
 
-    @Column(length = 3000)
-    @Size(max = 3000)
+    @Column(length = 10000)
+    @Size(min = 1, max = 10000)
     protected String description;
 
     @Column(name = "unit_cost")
-    @XmlElement(name = "unit-cost")
     @Min(1)
     protected Float unitCost;
 
+    protected Integer rank;
+
+    @Column(name = "small_image_url")
+    @XmlElement(name = "small-image-url")
+    protected String smallImageURL;
+
+    @Column(name = "medium_image_url")
+    @XmlElement(name = "medium-image-url")
+    protected String mediumImageURL;
+
     // ======================================
-    // =          Getters & Setters         =
+    // =        Getters and Setters         =
     // ======================================
 
     public Long getId() {
-        return id;
+        return this.id;
     }
 
-    public void setId(Long id) {
+    public void setId(final Long id) {
         this.id = id;
+    }
+
+    public int getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(final int version) {
+        this.version = version;
     }
 
     public String getTitle() {
@@ -75,43 +107,49 @@ public class Item implements Serializable {
         this.unitCost = unitCost;
     }
 
-
-    // ======================================
-    // =    hashcode, equals & toString     =
-    // ======================================
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Item item = (Item) o;
-
-        if (description != null ? !description.equals(item.description) : item.description != null) return false;
-        if (id != null ? !id.equals(item.id) : item.id != null) return false;
-        if (!title.equals(item.title)) return false;
-        if (unitCost != null ? !unitCost.equals(item.unitCost) : item.unitCost != null) return false;
-
-        return true;
+    public Integer getRank() {
+        return rank;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + title.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (unitCost != null ? unitCost.hashCode() : 0);
-        return result;
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
+
+    public String getSmallImageURL() {
+        return smallImageURL;
+    }
+
+    public void setSmallImageURL(String smallImageURL) {
+        this.smallImageURL = smallImageURL;
+    }
+
+    public String getMediumImageURL() {
+        return mediumImageURL;
+    }
+
+    public void setMediumImageURL(String mediumImageURL) {
+        this.mediumImageURL = mediumImageURL;
+    }
+
+    public Float getSubTotal() {
+        return (float) 23.4;
+    }
+    // ======================================
+    // =   Methods hash, equals, toString   =
+    // ======================================
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Item{");
-        sb.append("id=").append(id);
-        sb.append(", title='").append(title).append('\'');
-        sb.append(", description='").append(description).append('\'');
-        sb.append(", unitCost=").append(unitCost);
-        sb.append('}');
-        return sb.toString();
+        String result = getClass().getSimpleName() + " ";
+        if (id != null)
+            result += "id: " + id;
+        result += ", version: " + version;
+        if (title != null && !title.trim().isEmpty())
+            result += ", title: " + title;
+        if (description != null && !description.trim().isEmpty())
+            result += ", description: " + description;
+        if (unitCost != null)
+            result += ", unitCost: " + unitCost;
+        return result;
     }
 }
