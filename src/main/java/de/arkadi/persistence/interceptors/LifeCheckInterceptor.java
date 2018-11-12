@@ -24,6 +24,11 @@ public class LifeCheckInterceptor {
     // =          Lifecycle methods         =
     // ======================================
 
+    /**
+     * methods monitor live cycle of a bean
+     * @param ic
+     * @throws Exception
+     */
     @PostConstruct
     private void pingConstruct(InvocationContext ic) throws Exception {
         logger.info("Constructed " + ic.getTarget().toString());

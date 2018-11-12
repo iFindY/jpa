@@ -6,8 +6,12 @@
        version="1.1">
 
     <!--interceptor enabled-->
+    <!--this order is executed-->
     <interceptors>
         <class>de.arkadi.persistence.interceptors.LoggingInterceptor</class>
     </interceptors>
-
+    <!--decorator enabled -->
+    <decorators>
+        <class>de.arkadi.persistence.decorators.PurchaseOrderDecorator</class>
+    </decorators>
 </beans>

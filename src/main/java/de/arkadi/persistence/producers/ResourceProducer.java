@@ -32,6 +32,13 @@ public class ResourceProducer {
         return (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
     }
 
+    /**
+     * @param injectionPoint give access to meta data about the injection point.
+     *                       In this case it will get the name if the case it is injected into.
+     *                       can get bean type , its qualifier, object itself.
+     *                       Just inject the logger and the logger will confider thyself.
+     * @return a configured logger
+     */
     @Produces
     public Logger produceLogger(InjectionPoint injectionPoint) {
         return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName());

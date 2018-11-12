@@ -36,6 +36,14 @@
   3. Pagination: fix amount of returned objects 
   4. TypedQuery<myClass> have a return Type  and the type to search for in the query setup em.createQuery(jpql,myClass.class).
   
+  ### EJB
+  Stateful | Starless
+  ---------|------------------
+  application scoped    | request scoped 
+  session scoped        |
+  conversation scoped   |
+  
+   
   ### JPQL Syntax
       
       SELECT    <select clause>
@@ -282,4 +290,24 @@
     
    15. Interceptors can handel in and outgoing workflow of a bean with the `finaly` block
     
+   16. Producer creates objects and disposers destroys objects. The Dispose Method has parameter sam as Produces return type
+   and the annotation is inside the parameter block and not above method. If there are qualifiers specialise this object you
+   have to append them to the dispose annotation too. the Disposer Method must be declare in the same class as the producer.
+   The Dispose method is called automatic after the client context ends.
+    
+   17. the decorators wrap around class, add additional logic to a class named delegate.
+   The decorator implements same interface as the delegate object with needed methods. the delegate object is injected inside the decoratr
+   with @Inject @Delegate and perform some logic inside the decorators implemented interface methods.  
+   The decorators has to be enabled in the beans.xml .
+   Abstract classes implementing an interface do not have to implement all methods.
+   Interceptor = Technical 
+   Decorator = Business 
+   
+   18. Events is a observer/observable pattern 
+   
+   19. CDI is a sub container of java EE
+   
+   20. you can not @Inject Entities, tats why you have to insentient it. Entity is not a CDI bean and into it can not be injected.
+   But you have Entity Listeners 
+   
     
