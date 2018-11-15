@@ -1,7 +1,7 @@
-package de.arkadi.persistence.messaging;
+package de.arkadi.persistence.backingBenas;
 
 
-import de.arkadi.persistence.backingBenas.AccountBean;
+
 import de.arkadi.persistence.model.*;
 
 import javax.annotation.Resource;

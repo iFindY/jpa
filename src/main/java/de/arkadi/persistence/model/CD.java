@@ -24,7 +24,11 @@ public class CD extends Item implements Serializable {
     @Column(name = "music_company")
     private String musicCompany;
 
-    private String genre;
+    @ManyToOne
+    private Label label;
+
+    @ManyToOne
+    private Genre genre;
 
 
     @ManyToMany
@@ -46,7 +50,7 @@ public class CD extends Item implements Serializable {
     public CD() {
     }
 
-    public CD(String title, String description, Float unitCost, Float totalDuration, String genre) {
+    public CD(String title, String description, Float unitCost, Float totalDuration, Genre genre) {
         this.title = title;
         this.description = description;
         this.unitCost = unitCost;
@@ -74,11 +78,11 @@ public class CD extends Item implements Serializable {
         this.musicCompany = musicCompany;
     }
 
-    public String getGenre() {
+    public Genre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(Genre genre) {
         this.genre = genre;
     }
 
@@ -90,6 +94,13 @@ public class CD extends Item implements Serializable {
         this.musicians = musicians;
     }
 
+    public Label getLabel() {
+        return label;
+    }
+
+    public void setLabel(Label label) {
+        this.label = label;
+    }
     // ======================================
     // =    hashcode, equals & toString     =
     // ======================================
@@ -123,4 +134,6 @@ public class CD extends Item implements Serializable {
         final StringBuilder sb = new StringBuilder(title);
         return sb.toString();
     }
+
+
 }

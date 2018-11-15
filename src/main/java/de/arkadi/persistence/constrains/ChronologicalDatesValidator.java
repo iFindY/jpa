@@ -5,11 +5,7 @@ import de.arkadi.persistence.model.Order;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- * @author Antonio Goncalves
- *         http://www.antoniogoncalves.org
- *         --
- */
+
 public class ChronologicalDatesValidator implements ConstraintValidator<ChronologicalDates, Order> {
 
   @Override
