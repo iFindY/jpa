@@ -1,8 +1,8 @@
-package uk.co.monotonic.json_fundamentals._3_consuming_with_dom;
+package de.arkadi.persistence.json.consuming_with_dom;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.monotonic.json_fundamentals.common.SimpleJettyService;
+import de.arkadi.persistence.json.common.SimpleJettyService;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;

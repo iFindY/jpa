@@ -1,19 +1,16 @@
-package uk.co.monotonic.json_fundamentals._4_consuming_with_binding;
+package de.arkadi.persistence.json.consuming_with_binding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import uk.co.monotonic.json_fundamentals.common.Job;
-import uk.co.monotonic.json_fundamentals.common.LoanApplication;
-import uk.co.monotonic.json_fundamentals.common.SimpleJettyService;
+import de.arkadi.persistence.json.common.Job;
+import de.arkadi.persistence.json.common.SimpleJettyService;
 
-import javax.servlet.ServletException;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class BindingBankApplicationServlet extends HttpServlet
 {
@@ -23,6 +20,7 @@ public class BindingBankApplicationServlet extends HttpServlet
     protected void doPost(
         final HttpServletRequest req, final HttpServletResponse resp) throws IOException
     {
+        //TIP here is an  example of the Jackson mapper
         final BasicLoanApplication loanApplication =
             objectMapper.readValue(req.getInputStream(), BasicLoanApplication.class);
 

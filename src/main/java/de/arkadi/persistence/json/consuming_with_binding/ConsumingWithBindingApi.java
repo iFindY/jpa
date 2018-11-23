@@ -1,7 +1,6 @@
-package uk.co.monotonic.json_fundamentals._4_consuming_with_binding;
+package de.arkadi.persistence.json.consuming_with_binding;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.monotonic.json_fundamentals.common.LoanApplication;
 
 import java.io.File;
 import java.io.IOException;

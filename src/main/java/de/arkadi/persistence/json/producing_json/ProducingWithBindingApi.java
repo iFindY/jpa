@@ -1,12 +1,10 @@
-package uk.co.monotonic.json_fundamentals._2_producing_json;
+package de.arkadi.persistence.json.producing_json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import uk.co.monotonic.json_fundamentals.common.LoanApplication;
+import de.arkadi.persistence.json.common.LoanApplication;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.concurrent.TimeUnit;
 
 public class ProducingWithBindingApi
 {

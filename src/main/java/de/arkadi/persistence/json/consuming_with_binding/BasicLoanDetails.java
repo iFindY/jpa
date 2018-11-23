@@ -1,6 +1,4 @@
-package uk.co.monotonic.json_fundamentals._4_consuming_with_binding;
-
-import java.time.LocalDate;
+package de.arkadi.persistence.json.consuming_with_binding;
 
 public class BasicLoanDetails
 {

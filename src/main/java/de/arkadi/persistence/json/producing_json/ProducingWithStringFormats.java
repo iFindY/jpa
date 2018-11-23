@@ -1,8 +1,10 @@
-package uk.co.monotonic.json_fundamentals._2_producing_json;
+package de.arkadi.persistence.json.producing_json;
 
-import uk.co.monotonic.json_fundamentals.common.Job;
-import uk.co.monotonic.json_fundamentals.common.LoanApplication;
-import uk.co.monotonic.json_fundamentals.common.LoanDetails;
+
+
+import de.arkadi.persistence.json.common.Job;
+import de.arkadi.persistence.json.common.LoanApplication;
+import de.arkadi.persistence.json.common.LoanDetails;
 
 import java.util.List;
 

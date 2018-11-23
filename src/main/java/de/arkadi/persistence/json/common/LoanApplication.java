@@ -1,4 +1,4 @@
-package uk.co.monotonic.json_fundamentals.common;
+package de.arkadi.persistence.json.common;
 
 import java.util.List;
 

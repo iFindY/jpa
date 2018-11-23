@@ -1,4 +1,4 @@
-package uk.co.monotonic.json_fundamentals.common;
+package de.arkadi.persistence.json.common;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletHandler;

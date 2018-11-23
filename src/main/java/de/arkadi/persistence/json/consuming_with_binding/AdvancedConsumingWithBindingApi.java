@@ -1,4 +1,4 @@
-package uk.co.monotonic.json_fundamentals._4_consuming_with_binding;
+package de.arkadi.persistence.json.consuming_with_binding;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import uk.co.monotonic.json_fundamentals.common.LoanApplication;
 
 import java.io.File;
 import java.io.IOException;

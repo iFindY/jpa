@@ -1,9 +1,10 @@
-package uk.co.monotonic.json_fundamentals._4_consuming_with_binding;
+package de.arkadi.persistence.json.consuming_with_binding;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import uk.co.monotonic.json_fundamentals.common.Job;
-import uk.co.monotonic.json_fundamentals.common.LoanDetails;
+import de.arkadi.persistence.json.common.Job;
+import de.arkadi.persistence.json.common.LoanDetails;
+
 
 import java.util.ArrayList;
 import java.util.List;
