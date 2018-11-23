@@ -1,11 +1,13 @@
-package de.arkadi.persistence.rest;
+package de.arkadi.persistence.rest.resources;
 
 
 import de.arkadi.persistence.model.CD;
 
-import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.OptimisticLockException;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -108,7 +110,7 @@ public class CDEndpoint {
         try {
             entity = em.merge(entity);
         } catch (OptimisticLockException e) {
-            return Response.status(Response.Status.CONFLICT)
+            return Response.status(Status.CONFLICT)
                     .entity(e.getEntity()).build();
         }
 

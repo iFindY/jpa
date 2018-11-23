@@ -29,12 +29,12 @@
   - **Dynamic** : dynamically specified at runtime 
   - **Named**   : static an unchangeable
   - **Query**   : return objects which has to be casted 
-  - **TypedQuery** : have a return Type and a search type 
+  - **TypedQuery** : have a return Type and a search httpType 
   
   1. EntityManager.createQuery(JPQL)
   2. EntityManager.createNamedQuery(nameOfQuery) *inherent from Query and can be used most of the time* 
   3. Pagination: fix amount of returned objects 
-  4. TypedQuery<myClass> have a return Type  and the type to search for in the query setup em.createQuery(jpql,myClass.class).
+  4. TypedQuery<myClass> have a return Type  and the httpType to search for in the query setup em.createQuery(jpql,myClass.class).
   
   ### EJB
   Stateful | Starless
@@ -290,7 +290,7 @@
     
    15. Interceptors can handel in and outgoing workflow of a bean with the `finaly` block
     
-   16. Producer creates objects and disposers destroys objects. The Dispose Method has parameter sam as Produces return type
+   16. Producer creates objects and disposers destroys objects. The Dispose Method has parameter sam as Produces return httpType
    and the annotation is inside the parameter block and not above method. If there are qualifiers specialise this object you
    have to append them to the dispose annotation too. the Disposer Method must be declare in the same class as the producer.
    The Dispose method is called automatic after the client context ends.

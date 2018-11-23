@@ -9,7 +9,7 @@
   </session-config>
   <mime-mapping>
     <extension>ico</extension>
-    <mime-type>image/x-icon</mime-type>
+    <mime-httpType>image/x-icon</mime-httpType>
   </mime-mapping>
   <error-page>
     <error-code>404</error-code>

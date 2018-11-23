@@ -1,4 +1,4 @@
-package de.arkadi.persistence.rest;
+package de.arkadi.persistence.rest.resources;
 
 
 import de.arkadi.persistence.model.Musician;

@@ -8,7 +8,7 @@
 
     <f:metadata>
         <f:viewParam name="page" value='#{bookBean.page}'/>
-        <f:event type="preRenderView" listener='#{bookBean.paginate}'/>
+        <f:event httpType="preRenderView" listener='#{bookBean.paginate}'/>
     </f:metadata>
 
     <ui:param name="pageTitle" value="Search Books"/>

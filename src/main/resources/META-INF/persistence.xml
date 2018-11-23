@@ -6,7 +6,7 @@
              version="2.1">
 
     <!--Default to JTA in a JavaEE environment -->
-    <persistence-unit name="storePU" transaction-type="JTA">
+    <persistence-unit name="storePU" transaction-httpType="JTA">
         <description>MySql DB for local Testing</description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>java:jboss/datasources/MySqlDS</jta-data-source>
@@ -35,7 +35,7 @@
 
 
     <!--RESOURCE_LOCAL in a JavaSE environment.-->
-    <persistence-unit name="storePUTest" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="storePUTest" transaction-httpType="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>de.arkadi.persistence.model.Artist</class>
         <class>de.arkadi.persistence.model.Author</class>

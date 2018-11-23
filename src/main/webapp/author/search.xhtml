@@ -8,7 +8,7 @@
 
     <f:metadata>
         <f:viewParam name="page" value='#{authorBean.page}'/>
-        <f:event type="preRenderView" listener='#{authorBean.paginate}'/>
+        <f:event httpType="preRenderView" listener='#{authorBean.paginate}'/>
     </f:metadata>
 
     <ui:param name="pageTitle" value="Search Authors"/>

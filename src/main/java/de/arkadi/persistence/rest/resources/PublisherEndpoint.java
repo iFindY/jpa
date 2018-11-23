@@ -1,7 +1,7 @@
-package de.arkadi.persistence.rest;
+package de.arkadi.persistence.rest.resources;
 
 
-import de.arkadi.persistence.model.Author;
+import de.arkadi.persistence.model.Publisher;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,8 +16,8 @@ import java.util.List;
 
 
 @Stateless
-@Path("/authors")
-public class AuthorEndpoint {
+@Path("/publishers")
+public class PublisherEndpoint {
 
   // ======================================
   // =             Attributes             =
@@ -32,15 +32,15 @@ public class AuthorEndpoint {
 
   @POST
   @Consumes("application/xml")
-  public Response create(Author entity) {
+  public Response create(Publisher entity) {
     em.persist(entity);
-    return Response.created(UriBuilder.fromResource(AuthorEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
+    return Response.created(UriBuilder.fromResource(PublisherEndpoint.class).path(String.valueOf(entity.getId())).build()).build();
   }
 
   @DELETE
   @Path("/{id:[0-9][0-9]*}")
   public Response deleteById(@PathParam("id") Long id) {
-    Author entity = em.find(Author.class, id);
+    Publisher entity = em.find(Publisher.class, id);
     if (entity == null) {
       return Response.status(Status.NOT_FOUND).build();
     }
@@ -52,9 +52,9 @@ public class AuthorEndpoint {
   @Path("/{id:[0-9][0-9]*}")
   @Produces("application/xml")
   public Response findById(@PathParam("id") Long id) {
-    TypedQuery<Author> findByIdQuery = em.createQuery("SELECT DISTINCT a FROM Author a WHERE a.id = :entityId ORDER BY a.id", Author.class);
+    TypedQuery<Publisher> findByIdQuery = em.createQuery("SELECT DISTINCT p FROM Publisher p WHERE p.id = :entityId ORDER BY p.id", Publisher.class);
     findByIdQuery.setParameter("entityId", id);
-    Author entity;
+    Publisher entity;
     try {
       entity = findByIdQuery.getSingleResult();
     } catch (NoResultException nre) {
@@ -68,22 +68,22 @@ public class AuthorEndpoint {
 
   @GET
   @Produces("application/xml")
-  public List<Author> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
-    TypedQuery<Author> findAllQuery = em.createQuery("SELECT DISTINCT a FROM Author a ORDER BY a.id", Author.class);
+  public List<Publisher> listAll(@QueryParam("start") Integer startPosition, @QueryParam("max") Integer maxResult) {
+    TypedQuery<Publisher> findAllQuery = em.createQuery("SELECT DISTINCT p FROM Publisher p ORDER BY p.id", Publisher.class);
     if (startPosition != null) {
       findAllQuery.setFirstResult(startPosition);
     }
     if (maxResult != null) {
       findAllQuery.setMaxResults(maxResult);
     }
-    final List<Author> results = findAllQuery.getResultList();
+    final List<Publisher> results = findAllQuery.getResultList();
     return results;
   }
 
   @PUT
   @Path("/{id:[0-9][0-9]*}")
   @Consumes("application/xml")
-  public Response update(Author entity) {
+  public Response update(Publisher entity) {
     entity = em.merge(entity);
     return Response.noContent().build();
   }
