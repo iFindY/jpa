@@ -151,7 +151,7 @@ public class EmployeeResource {
     }
 
 
-    //TIP download file example
+    //TIP download file example and cookies 
     @GET
     @Path("download") //employees/download?id=9
     @Produces({MediaType.APPLICATION_OCTET_STREAM, "image/jpg", "image/png", "image/jpeg"})
